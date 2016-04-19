@@ -1,0 +1,49 @@
+{% extends "dashboard.html" %}
+{% block content %}
+<!-- selection -->
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("li").attr("class","").find("span").remove();
+    $("#as").attr("class", "active").find("a").append('<span class="sr-only">(current)</span>');
+  });
+</script>
+<!-- selection end -->
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+      <div class="container">
+        <h1>Analysis</h1>
+        <p>Upload customer activies to start learning who will be the next potential revisiting ones. Profile customer and get ideas about their intersts.</p>
+        <form action="/upload_file" method=post enctype=multipart/form-data>
+         <p><input type=file name=file></p>
+         <input type=submit class="btn btn-primary btn-lg" value=Upload>
+        </form>
+      </div>
+    </div>
+
+    <div class="container">
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="col-md-4">
+          <h2>Heading</h2>
+          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+          <h2>Heading</h2>
+          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+       </div>
+      </div>
+
+      <hr>
+
+      <footer>
+        <p>&copy; 2016 Team Tiger</p>
+      </footer>
+    </div> <!-- /container -->
+
+  </body>
+</div>
+
+{% endblock %}

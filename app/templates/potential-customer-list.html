@@ -1,0 +1,40 @@
+{% extends "dashboard.html" %}
+{% block content %}
+<!-- selection -->
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("li").attr("class","").find("span").remove();
+    $("#pc").attr("class", "active").find("a").append('<span class="sr-only">(current)</span>');
+  });
+</script>
+<!-- selection end -->
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          
+          <h1 class="sub-header">Potential Customer List</h1>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>User ID</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Facebook</th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for customer in customers %}
+                <tr>
+                  <td>{{ customer.id }}</td>
+                  <td>{{ customer.user_id }}</td>
+                  <td>{{ customer.name }}</td>
+                  <td>{{ customer.email }}</td>
+                  <td><a href="{{ customer.facebook }}">{{ customer.facebook }}</a></td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+          </div>
+</div>
+
+{% endblock %}

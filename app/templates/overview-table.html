@@ -1,0 +1,34 @@
+{% extends "dashboard.html" %}
+{% block content %}
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">Overview</h1>
+
+          <div class="row placeholders">
+            <div class="col-xs-6 col-sm-3 placeholder">
+              <a href="/potential-customer-list">
+                <img src="../static/img/user.png" width="96" height="96" class="img-responsive" alt="Generic placeholder thumbnail">
+                <h4>Potential Customer</h4>
+              </a>
+            </div>
+            <div class="col-xs-6 col-sm-3 placeholder">
+            <a href="/analysis">
+              <img src="../static/img/pie_chart.png" width="96" height="96" class="img-responsive" alt="Generic placeholder thumbnail">
+              <h4>Analytics</h4>
+              </a>
+            </div>
+            <div class="col-xs-6 col-sm-3 placeholder">
+            <a href="/foodstyle">
+              <img src="../static/img/restaurant2.png" width="96" height="96" class="img-responsive" alt="Generic placeholder thumbnail">
+              <h4>Food and Drinks Styles</h4>
+              </a>
+            </div>
+            <div class="col-xs-6 col-sm-3 placeholder">
+            <a href="#">
+              <img src="../static/img/us_music.png" width="96" height="96" class="img-responsive" alt="Generic placeholder thumbnail">
+              <h4>Music Styles</h4>
+              </a>
+            </div>
+          </div>
+</div>
+
+{% endblock %}
