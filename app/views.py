@@ -4,6 +4,8 @@ from flask import render_template, redirect, flash, request, session, json, url_
 from werkzeug import secure_filename
 from .models import User, Customer, Interest
 
+upload_success = True
+
 @app.route('/')
 def index():
 	if session.get('user'):
@@ -33,6 +35,7 @@ def validateLogin():
 @app.route('/logout', methods=['POST', 'GET'])
 def logout():
 	session.pop('user', None)
+	upload_success=True
 	return redirect('/')
 
 
@@ -68,9 +71,10 @@ def restaurantstyle():
       ]
 	return render_template('/bubble-chart.html', input=json.dumps(data))
 
+
 @app.route('/analysis')
 def analysis():
-	return render_template('/analysis.html')
+	return render_template('/analysis.html', success=upload_success)
 
 def allowed_file(filename):
 	return '.' in filename and filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
@@ -82,6 +86,7 @@ def upload_file():
 		if file and allowed_file(file.filename):
 			filename = secure_filename(file.filename)
 			file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-			return redirect(url_for('analysis',
-			                        filename=filename))
+			global upload_success
+			upload_success = False
+			return render_template('/analysis.html', success=upload_success)
 	return redirect('/analysis')
