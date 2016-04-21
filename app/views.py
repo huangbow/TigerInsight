@@ -5,15 +5,16 @@ from werkzeug import secure_filename
 from .models import User, Customer, Interest
 
 @app.route('/')
-def login():
-	return render_template('login.html', title='Tiger Insight', team='Team Tiger!')
-
-@app.route('/home')
-def home():
+def index():
 	if session.get('user'):
 		return render_template('logout.html', title='Tiger Insight', team='Team Tiger!')
 	else:
-		return redirect('/')
+		return redirect('/home')
+	
+
+@app.route('/home')
+def home():
+	return render_template('login.html', title='Tiger Insight', team='Team Tiger!')
 
 @app.route('/validateLogin',methods=['POST'])
 def validateLogin():
@@ -40,7 +41,7 @@ def dashboard():
 	if session.get('user'):
 		return render_template('overview-table.html')
 	else:
-		return redirect('/')
+		return redirect('/home')
 
 @app.route('/potential-customer-list')
 def customer():
