@@ -15,19 +15,17 @@
             <table class="table table-striped">
               <thead>
                 <tr>
-                  <th>#</th>
-                  <th>User ID</th>
                   <th>Name</th>
-                  <th>Recommend</th>
+                  <th>Restaurant Recommend</th>
+                  <th>Music Style Recommend</th>
                 </tr>
               </thead>
               <tbody>
               {% for customer in pcustomers %}
                 <tr>
-                  <td>{{ customer.id }}</td>
-                  <td>{{ customer.user_id }}</td>
-                  <td>{{ customer.name }}</td>
-                  <td>{{ customer.recommend }}</td>
+                  <td><a href= "{{ url_for('showcustomer', name=customer.name) }}">{{ customer.name }}</a></td>
+                  <td>{{ customer.restaurant_recommend }}</td>
+                  <td>{{ customer.music_recommend }}</td>
                 </tr>
               {% endfor %}
               </tbody>

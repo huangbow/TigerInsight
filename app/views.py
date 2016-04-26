@@ -1,6 +1,6 @@
 from app import app, db
 import os
-from flask import render_template, redirect, flash, request, session, json, url_for
+from flask import render_template, redirect, flash, request, session, json, url_for, flash
 from werkzeug import secure_filename
 from .models import User, Customer, Interest, Food_style, PotentialCustomer
 
@@ -51,6 +51,10 @@ def potentialcustomer():
 	pcustomers = PotentialCustomer.query.all()
 	return render_template('potential-customer-list.html', pcustomers=pcustomers)
 
+@app.route('/potential-customer-list/<name>')
+def showcustomer(name):
+	return redirect(url_for('customerprofile', name=name))
+
 @app.route('/overview')
 def overview():
 	return redirect('/dashboard')
@@ -67,9 +71,14 @@ def analysis():
 	return render_template('/analysis.html', success=upload_success)
 
 @app.route('/customerprofile')
-def customerprofile():
+def customersprofile():
 	customers = Customer.query.all()
 	return render_template('/customer-profile.html', customers=customers)
+
+@app.route('/customerprofile/<name>')
+def customerprofile(name):
+	customer = Customer.query.filter(Customer.name == name).all()
+	return render_template('/customer-profile.html', customers=customer)
 
 @app.route('/musicstyle')
 def musicstyle():
