@@ -1,0 +1,51 @@
+{% extends "dashboard.html" %}
+{% block content %}
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="../static/js/biPartite.js"></script>
+
+
+
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <h1 class="page-header">Food & Drink Styles</h1>
+    <div id="content">
+    </div>
+    <h2>Details of Restaurant List</h2>
+</div>
+<script>
+    var sales_data=[
+        ['PIZZA BOCCA LUPO','Italian cuisine',1,0],
+        ['VINO VINO WINE BAR','Beer, Wine & Spirits',1,0],
+        ['ROBEE\'S FALAFEL','Mediterranean cuisine',1,0],
+        ['TREATBOT','Ice Cream & Frozen Yogurt',1,0],
+        ['BLUSH ICE BAR & RAW KITCHEN','Japanese cuisine',1,0],
+        ['ONA ROLL','Chinese cuisine',1,0],
+        ['LOTERIA TACO BAR','Mexican cuisine',1,0],
+        ['CALIDOG','Hot Dogs',1,0],
+        ['PASTA FRESCA','Italian cuisine',1,0],
+        ['PHONOMENAL NOODLE HOUSE','Vietnamese cuisine',1,0],
+        ['CHOCATOO','Cafes',1,0],
+        ['KONJOE BURGER BAR','American cuisine',1,0],
+        ['BRAY BUTCHER BLOCK & BISTRO','Ecuadorian cuisine',1,0],
+        ['AREPA&MAS','Colombian',1,0],
+        ['SPUDS USA','American cuisine',1,0],
+        ['LOU\'S BEACH SHACK','Seafood',1,0],
+        ['ONI MEXICATESSEN','Mexican cuisine',1,0],
+        ['San Pedro Square Market Bar','Beer, Wine & Spirits',1,0],
+        ['Market Beer Company','Beer, Wine & Spirits',1,0],
+        ['Bellano 2 Coffee','Coffee & Tea',1,0]
+    ];
+
+    var width = 1500, height = 610, margin ={b:0, t:40, l:320, r:30};
+
+    var svg = d3.select("#content")
+        .append("svg").attr('class','col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2').attr('height',700)
+        .append("g").attr("transform","translate("+ margin.l+","+margin.t+")");
+
+    var data = [ 
+        {data:bP.partData(sales_data,2), id:'foodBipartite', header:["Channel","State", "Proportion Bipartite Graph"]}
+    ];
+
+    bP.draw(data, svg);
+
+</script>
+{% endblock %}

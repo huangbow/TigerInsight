@@ -25,3 +25,11 @@ class Interest(db.Model):
 
 	def __repr__(self):
 		return '<Interest %r' % (self.interest)
+
+class Food_style(db.Model):
+	id = db.Column(db.Integer, primary_key=True)
+	name = db.Column(db.String(120), index=True, unique=True)
+	tags= db.Column(db.String(224), index=True, unique=True)
+
+	def __repr__(self):
+		return '<Food_style %r' % (self.name)
