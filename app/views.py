@@ -2,7 +2,7 @@ from app import app, db
 import os
 from flask import render_template, redirect, flash, request, session, json, url_for
 from werkzeug import secure_filename
-from .models import User, Customer, Interest
+from .models import User, Customer, Interest, Food_style
 
 upload_success = True
 
@@ -58,24 +58,33 @@ def overview():
 
 @app.route('/foodstyle')
 def restaurantstyle():
-	# data = [
- #        {"text": "Italian Food", "count": "236"},
- #        {"text": "Asian", "count": "382"},
- #        {"text": "American", "count": "170"},
- #        {"text": "Burger", "count": "123"},
- #        {"text": "Pizza", "count": "12"},
- #        {"text": "Wine", "count": "170"},
- #        {"text": "Beer", "count": "370"},
- #        {"text": "Grill", "count": "10"},
- #        {"text": "Korean BBQ", "count": "170"},
- #      ]
-	# return render_template('/bubble-chart.html', input=json.dumps(data))
-	return render_template('/foodstyle.html')
+	foodstyle = Food_style.query.all()
+	return render_template('/foodstyle.html', foodstyle=foodstyle)
 
 
 @app.route('/analysis')
 def analysis():
 	return render_template('/analysis.html', success=upload_success)
+
+@app.route('/customerprofile')
+def customerprofile():
+	customers = Customer.query.all()
+	return render_template('/customer-profile.html', customers=customers)
+
+@app.route('/musicstyle')
+def musicstyle():
+	data = [
+        {"text": "Jazz", "count": "236"},
+        {"text": "Hip-Hop", "count": "382"},
+        {"text": "Rhythm & Blues", "count": "170"},
+        {"text": "Swing", "count": "123"},
+        {"text": "Blue", "count": "12"},
+        {"text": "Pop", "count": "170"},
+        {"text": "Soul", "count": "370"},
+        {"text": "Funk", "count": "10"},
+        {"text": "County", "count": "170"},
+      ]
+	return render_template('/musicstyle.html', input=json.dumps(data))
 
 def allowed_file(filename):
 	return '.' in filename and filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']

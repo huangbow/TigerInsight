@@ -2,14 +2,42 @@
 {% block content %}
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="../static/js/biPartite.js"></script>
-
+<!-- selection -->
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("li").attr("class","").find("span").remove();
+    $("#fs").attr("class", "active").find("a").append('<span class="sr-only">(current)</span>');
+  });
+</script>
+<!-- selection end -->
 
 
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
     <h1 class="page-header">Food & Drink Styles</h1>
+    <h2>Proportion Bipartite Graph</h2>
     <div id="content">
     </div>
-    <h2>Details of Restaurant List</h2>
+    <h2>Details of Restaurants</h2>
+    <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Restaurant Name</th>
+                  <th>Tags</th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for food in foodstyle %}
+                <tr>
+                  <td>{{ food.id }}</td>
+                  <td>{{ food.name }}</td>
+                  <td>{{ food.tags }}</td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+          </div>
 </div>
 <script>
     var sales_data=[
@@ -42,7 +70,7 @@
         .append("g").attr("transform","translate("+ margin.l+","+margin.t+")");
 
     var data = [ 
-        {data:bP.partData(sales_data,2), id:'foodBipartite', header:["Channel","State", "Proportion Bipartite Graph"]}
+        {data:bP.partData(sales_data,2), id:'foodBipartite', header:["Channel","State", ""]}
     ];
 
     bP.draw(data, svg);
