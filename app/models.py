@@ -20,9 +20,9 @@ class Customer(db.Model):
 
 class PotentialCustomer(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
-	user_id = db.Column(db.String(120), index=True, unique=True)
 	name = db.Column(db.String(64), index=True, unique=True)
-	recommend = db.Column(db.String(224), index=True, unique=True)
+	restaurant_recommend = db.Column(db.String(224), index=True, unique=True)
+	music_recommend = db.Column(db.String(224), index=True, unique=True)
 
 	def __repr__(self):
 		return '<PotentialCustomer %r' % (self.name)
