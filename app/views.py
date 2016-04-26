@@ -58,18 +58,19 @@ def overview():
 
 @app.route('/foodstyle')
 def restaurantstyle():
-	data = [
-        {"text": "Italian Food", "count": "236"},
-        {"text": "Asian", "count": "382"},
-        {"text": "American", "count": "170"},
-        {"text": "Burger", "count": "123"},
-        {"text": "Pizza", "count": "12"},
-        {"text": "Wine", "count": "170"},
-        {"text": "Beer", "count": "370"},
-        {"text": "Grill", "count": "10"},
-        {"text": "Korean BBQ", "count": "170"},
-      ]
-	return render_template('/bubble-chart.html', input=json.dumps(data))
+	# data = [
+ #        {"text": "Italian Food", "count": "236"},
+ #        {"text": "Asian", "count": "382"},
+ #        {"text": "American", "count": "170"},
+ #        {"text": "Burger", "count": "123"},
+ #        {"text": "Pizza", "count": "12"},
+ #        {"text": "Wine", "count": "170"},
+ #        {"text": "Beer", "count": "370"},
+ #        {"text": "Grill", "count": "10"},
+ #        {"text": "Korean BBQ", "count": "170"},
+ #      ]
+	# return render_template('/bubble-chart.html', input=json.dumps(data))
+	return render_template('/foodstyle.html')
 
 
 @app.route('/analysis')
