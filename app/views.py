@@ -2,7 +2,7 @@ from app import app, db
 import os
 from flask import render_template, redirect, flash, request, session, json, url_for
 from werkzeug import secure_filename
-from .models import User, Customer, Interest, Food_style
+from .models import User, Customer, Interest, Food_style, PotentialCustomer
 
 upload_success = True
 
@@ -47,9 +47,9 @@ def dashboard():
 		return redirect('/home')
 
 @app.route('/potential-customer-list')
-def customer():
-	customers = Customer.query.all()
-	return render_template('potential-customer-list.html', customers=customers)
+def potentialcustomer():
+	pcustomers = PotentialCustomer.query.all()
+	return render_template('potential-customer-list.html', pcustomers=pcustomers)
 
 @app.route('/overview')
 def overview():

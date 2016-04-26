@@ -18,18 +18,16 @@
                   <th>#</th>
                   <th>User ID</th>
                   <th>Name</th>
-                  <th>Email</th>
-                  <th>Facebook</th>
+                  <th>Recommend</th>
                 </tr>
               </thead>
               <tbody>
-              {% for customer in customers %}
+              {% for customer in pcustomers %}
                 <tr>
                   <td>{{ customer.id }}</td>
                   <td>{{ customer.user_id }}</td>
                   <td>{{ customer.name }}</td>
-                  <td>{{ customer.email }}</td>
-                  <td><a href="{{ customer.facebook }}">{{ customer.facebook }}</a></td>
+                  <td>{{ customer.recommend }}</td>
                 </tr>
               {% endfor %}
               </tbody>
