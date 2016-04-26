@@ -18,11 +18,11 @@ class Customer(db.Model):
 	def __repr__(self):
 		return '<Customer %r' % (self.name)
 
-class PotentialCustomer(object):
+class PotentialCustomer(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	user_id = db.Column(db.String(120), index=True, unique=True)
 	name = db.Column(db.String(64), index=True, unique=True)
-	recommend = db.Column(db.String(400), index=True, unique=True)
+	recommend = db.Column(db.String(224), index=True, unique=True)
 
 	def __repr__(self):
 		return '<PotentialCustomer %r' % (self.name)
