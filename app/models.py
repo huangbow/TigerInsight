@@ -27,7 +27,11 @@ class Interest(db.Model):
 		return '<Interest %r' % (self.interest)
 
 class Food_style(db.Model):
+<<<<<<< HEAD
 	id = db.Column(db.Integer, primary_key=True)
+=======
+	id = db.Column(db.Integer, primary_key=True),
+>>>>>>> origin/master
 	name = db.Column(db.String(120), index=True, unique=True)
 	tags= db.Column(db.String(224), index=True, unique=True)
 
