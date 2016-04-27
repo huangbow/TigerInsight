@@ -3,7 +3,7 @@ import os
 from flask import render_template, redirect, flash, request, session, json, url_for, flash
 from werkzeug import secure_filename
 from .models import User, Customer, Interest, Food_style, PotentialCustomer
-
+from .model.prediction import Prediction
 
 @app.route('/')
 def index():
@@ -77,7 +77,7 @@ def showcustomer(name):
 @app.route('/analysis')
 def analysis():
 	if checkDataExist():
-		return redirect(url_for('showanAlysisResult', cat_num = session['cat_num']))#hard code
+		return redirect(url_for('showanAlysisResult', cat_num=session['cat_num']))
 	return render_template('/analysis.html')
 
 @app.route('/analysis/<int:cat_num>')
@@ -92,11 +92,21 @@ def upload_file():
 		file = request.files['file']
 		if file and allowed_file(file.filename):
 			filename = secure_filename(file.filename)
-			file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-			session['cat_num'] = 7
-			return redirect(url_for('showanAlysisResult', cat_num = session['cat_num']))#hard code
+			file_save_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+			file_to_save_path = app.config['UPLOAD_FOLDER']
+			file.save(file_save_path)
+			
+
+			prediction = Prediction()
+			prediction.prediction(file_save_path, file_to_save_path)
+			# register a session to store the number of categories
+			session['cat_num'] = prediction.category_num
+
+			return redirect(url_for('showanAlysisResult', cat_num=session['cat_num']))#hard code
+
 	return redirect('/analysis')
 
+	
 def allowed_file(filename):
 	return '.' in filename and filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
 
