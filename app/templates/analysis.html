@@ -12,39 +12,50 @@
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">
       <div class="container">
-        <h1>Analysis</h1>
-        <p>Upload customer activies to start learning who will be the next potential revisiting ones. Profile customer and get ideas about their intersts.</p>
-        <form action="/upload_file" method=post enctype=multipart/form-data>
-         <p><input type=file name=file></p>
-         <input type=submit class="btn btn-primary btn-lg" value=Upload>
-        </form>
+        {% if not cat_num %}
+            <h1>Analysis</h1>  
+            <p>Upload customer activies to start learning who will be the next potential revisiting ones. Profile customer and get ideas about their intersts.</p>
+            <form action="/upload_file" method=post enctype=multipart/form-data>
+             <p><input type=file name=file></p>
+             <input type=submit class="btn btn-primary btn-lg" value=Upload>
+            </form>
+        {% else %}
+            <h1>Analysis Reslut</h1>  
+            
+            <form class="navbar-form navbar-right" action="/upload_file" method=post enctype=multipart/form-data>
+                <div class="form-group">
+                    <input type=file name=file>
+                </div>
+             <input type=submit class="btn btn-primary btn-sm" value=Upload>
+            </form>
+        {% endif %}
       </div>
     </div>
     <div class="container marketing">
-      {% if not success %}
-        <h1>Analysis Results</h1>
-        <hr>
+      {% if cat_num %}
+
+        <h2>Customer Distribution</h2>
         <div class="row">
-            <div class="col-sm-5 col-md-5">
-              <img class="img-rectangle" src="../static/img/cat0.png" width="400" height="300">
-              <h2>Category 0</h2>
-              <p>Weekly Revisiting Customer</p>
+            <div class="col-sm-6 col-md-6">
+              <img class="img-rectangle" src="../static/img/cat_result/distribution.png" width="500" height="400">
             </div><!-- /.col-lg-4 -->
         
-        <div class="col-sm-5 col-md-5">
-          <img class="img-rectangle" src="../static/img/cat1.png" width="400" height="300">
-          <h2>Category 1</h2>
-          <p>Monthly Revisiting Customer</p>
-        </div><!-- /.col-lg-4 -->
+        </div>
+        <hr>
+        <h2>Categories</h2>
+       <div class="row">
+           {% for i in range(0, cat_num) %}
+            <div class="col-sm-5 col-md-5">
+              <img class="img-rectangle" src="../static/img/cat_result/cat{{ i }}.png" width="400" height="300">
+              <p>Category {{ i }}</p>
+            </div><!-- /.col-lg-4 -->
+            {% endfor %}
+        
       </div>
-      <div class="row">
-        <div class="col-sm-5 col-md-5">
-          <img class="img-rectangle" src="../static/img/cat2.png" width="400" height="300">
-          <h2>Category 2</h2>
-          <p>Seasonly Revisiting Customer</p>
-        </div><!-- /.col-lg-4 -->
-      </div>
-    
+        
+      <hr>
+        
+       
     {% endif %}
       <!-- Example row of columns -->
       

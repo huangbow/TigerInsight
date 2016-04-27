@@ -4,7 +4,6 @@ from flask import render_template, redirect, flash, request, session, json, url_
 from werkzeug import secure_filename
 from .models import User, Customer, Interest, Food_style, PotentialCustomer
 
-upload_success = True
 
 @app.route('/')
 def index():
@@ -35,9 +34,12 @@ def validateLogin():
 @app.route('/logout', methods=['POST', 'GET'])
 def logout():
 	session.pop('user', None)
-	upload_success=True
+	session.pop('cat_num', None)
 	return redirect('/')
 
+
+##################################
+######    Dash Board #############
 
 @app.route('/dashboard')
 def dashboard():
@@ -46,8 +48,22 @@ def dashboard():
 	else:
 		return redirect('/home')
 
+
+def checkDataExist():
+	if session.get('cat_num'):
+		return True
+	return False
+
+@app.route('/overview')
+def overview():
+	return redirect('/dashboard')
+
+
+
 @app.route('/potential-customer-list')
 def potentialcustomer():
+	if not checkDataExist():
+		return redirect(url_for('analysis'))
 	pcustomers = PotentialCustomer.query.all()
 	return render_template('potential-customer-list.html', pcustomers=pcustomers)
 
@@ -55,9 +71,49 @@ def potentialcustomer():
 def showcustomer(name):
 	return redirect(url_for('customerprofile', name=name))
 
-@app.route('/overview')
-def overview():
-	return redirect('/dashboard')
+
+
+
+@app.route('/analysis')
+def analysis():
+	if checkDataExist():
+		return redirect(url_for('showanAlysisResult', cat_num = session['cat_num']))#hard code
+	return render_template('/analysis.html')
+
+@app.route('/analysis/<int:cat_num>')
+def showanAlysisResult(cat_num):
+	return render_template('/analysis.html', cat_num=cat_num)
+
+@app.route('/analysis/upload_file', methods=['GET', 'POST'])
+@app.route('/upload_file', methods=['GET', 'POST'])
+def upload_file():
+	session.pop('cat_num', None) # clean history result
+	if request.method == 'POST':
+		file = request.files['file']
+		if file and allowed_file(file.filename):
+			filename = secure_filename(file.filename)
+			file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+			session['cat_num'] = 7
+			return redirect(url_for('showanAlysisResult', cat_num = session['cat_num']))#hard code
+	return redirect('/analysis')
+
+def allowed_file(filename):
+	return '.' in filename and filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
+
+
+
+@app.route('/customerprofile')
+def customersprofile():
+	if not checkDataExist():
+		return redirect(url_for('analysis'))
+	customers = Customer.query.all()
+	return render_template('/customer-profile.html', customers=customers)
+
+@app.route('/customerprofile/<name>')
+def customerprofile(name):
+	customer = Customer.query.filter(Customer.name == name).all()
+	return render_template('/customer-profile.html', customers=customer)
+
 
 
 @app.route('/foodstyle')
@@ -66,19 +122,6 @@ def restaurantstyle():
 	return render_template('/foodstyle.html', foodstyle=foodstyle)
 
 
-@app.route('/analysis')
-def analysis():
-	return render_template('/analysis.html', success=upload_success)
-
-@app.route('/customerprofile')
-def customersprofile():
-	customers = Customer.query.all()
-	return render_template('/customer-profile.html', customers=customers)
-
-@app.route('/customerprofile/<name>')
-def customerprofile(name):
-	customer = Customer.query.filter(Customer.name == name).all()
-	return render_template('/customer-profile.html', customers=customer)
 
 @app.route('/musicstyle')
 def musicstyle():
@@ -95,17 +138,11 @@ def musicstyle():
       ]
 	return render_template('/musicstyle.html', input=json.dumps(data))
 
-def allowed_file(filename):
-	return '.' in filename and filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
 
-@app.route('/upload_file', methods=['GET', 'POST'])
-def upload_file():
-	if request.method == 'POST':
-		file = request.files['file']
-		if file and allowed_file(file.filename):
-			filename = secure_filename(file.filename)
-			file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-			global upload_success
-			upload_success = False
-			return render_template('/analysis.html', success=upload_success)
-	return redirect('/analysis')
+
+
+
+
+
+
+
