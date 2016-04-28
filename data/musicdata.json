@@ -1,0 +1,11 @@
+[
+        {"text": "Jazz", "count": "236"},
+        {"text": "Hip-Hop", "count": "382"},
+        {"text": "Rhythm & Blues", "count": "170"},
+        {"text": "Swing", "count": "123"},
+        {"text": "Blue", "count": "12"},
+        {"text": "Pop", "count": "170"},
+        {"text": "Soul", "count": "370"},
+        {"text": "Funk", "count": "10"},
+        {"text": "County", "count": "170"}
+]

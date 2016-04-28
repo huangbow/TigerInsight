@@ -1,0 +1,36 @@
+{% extends "dashboard.html" %}
+{% block content %}
+<!-- selection -->
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("li").attr("class","").find("span").remove();
+    $("#rd").attr("class", "active").find("a").append('<span class="sr-only">(current)</span>');
+  });
+</script>
+<!-- selection end -->
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          
+          <h1 class="sub-header">Recommendations</h1>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Restaurant Recommend</th>
+                  <th>Music Style Recommend</th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for customer in pcustomers %}
+                <tr>
+                  <td><a href= "{{ url_for('showcustomer', name=customer.name) }}">{{ customer.name }}</a></td>
+                  <td>{{ customer.restaurant_recommend }}</td>
+                  <td>{{ customer.music_recommend }}</td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+          </div>
+</div>
+
+{% endblock %}
