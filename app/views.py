@@ -1,5 +1,5 @@
 from app import app, db
-import os, sys
+import os, sys, random
 from flask import render_template, redirect, flash, request, session, json, url_for, flash
 from werkzeug import secure_filename
 from .models import User, Customer, Interest, Food_style, PotentialCustomer
@@ -83,15 +83,19 @@ def upload_file():
 			file_to_save_path = app.config['UPLOAD_FOLDER']
 			file.save(file_save_path)
 			
-
 			prediction = Prediction()
 			prediction.prediction(file_save_path, file_to_save_path)
 			# register a session to store the number of categories
 			session['cat_num'] = prediction.category_num
 
-			return redirect(url_for('showanAlysisResult', cat_num=session['cat_num']))#hard code
+			# return redirect(url_for('showanAlysisResult', cat_num=session['cat_num'], r=random.randint(0,1000)))
+			return render_template('/analysis.html', cat_num=session['cat_num'], r=random.randint(0,1000))
+			# return render_template('/upload_success.html')
 
 	return redirect('/analysis')
+
+
+
 
 	
 def allowed_file(filename):

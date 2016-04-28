@@ -1,5 +1,6 @@
 {% extends "dashboard.html" %}
 {% block content %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <!-- selection -->
 <script type="text/javascript">
   $(document).ready(function() {
@@ -7,6 +8,8 @@
     $("#as").attr("class", "active").find("a").append('<span class="sr-only">(current)</span>');
   });
 </script>
+
+
 <!-- selection end -->
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
     <!-- Main jumbotron for a primary marketing message or call to action -->
@@ -37,7 +40,7 @@
         <h2>Customer Distribution</h2>
         <div class="row">
             <div class="col-sm-6 col-md-6">
-              <img class="img-rectangle" src="../static/img/cat_result/cat_share.png" width="500" height="400">
+              <img class="img-rectangle" src="../static/img/cat_result/cat_share.png?r={{ r }}" width="500" height="400">
             </div><!-- /.col-lg-4 -->
         
         </div>
@@ -48,7 +51,7 @@
        <div class="row">
            {% for i in range(0, cat_num) %}
             <div class="col-sm-5 col-md-5">
-              <img class="img-rectangle" src="../static/img/cat_result/kde/kdeplt_cat{{ i }}.png" width="400" height="300">
+              <img class="img-rectangle" src="../static/img/cat_result/kde/kdeplt_cat{{ i }}.png?r={{ r }}" width="400" height="300">
               <p>Category {{ i }}</p>
             </div><!-- /.col-lg-4 -->
             {% endfor %}
@@ -60,7 +63,7 @@
        <div class="row">
            {% for i in range(0, cat_num) %}
             <div class="col-sm-5 col-md-5">
-              <img class="img-rectangle" src="../static/img/cat_result/mle/mleplt_cat{{ i }}.png" width="400" height="300">
+              <img class="img-rectangle" src="../static/img/cat_result/mle/mleplt_cat{{ i }}.png?r={{ r }}" width="400" height="300">
               <p>Category {{ i }}</p>
             </div><!-- /.col-lg-4 -->
             {% endfor %}
@@ -70,11 +73,7 @@
         
         
        
-    {% endif %}
-      <!-- Example row of columns -->
-      
-        
-
+        {% endif %}
 
       <hr>
 
@@ -82,7 +81,6 @@
         <p>&copy; 2016 Team Tiger</p>
       </footer>
     </div> <!-- /container -->
-
 </div>
 
 {% endblock %}
