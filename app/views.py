@@ -146,8 +146,6 @@ def musicstyle():
 
 @app.route('/customerprofile')
 def customersprofile():
-	if not checkDataExist():
-		return redirect(url_for('analysis'))
 	customers = Customer.query.all()
 	return render_template('/customer-profile.html', customers=customers)
 
