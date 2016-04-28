@@ -17,6 +17,9 @@
     <h2>Proportion Bipartite Graph</h2>
     <div id="content">
     </div>
+    
+</div>
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
     <h2>Details of Restaurants</h2>
     <div class="table-responsive">
             <table class="table table-striped">
@@ -37,7 +40,7 @@
               {% endfor %}
               </tbody>
             </table>
-          </div>
+    </div>
 </div>
 <script>
     var sales_data=[
@@ -63,10 +66,10 @@
         ['Bellano 2 Coffee','Coffee & Tea',1,0]
     ];
 
-    var width = 1500, height = 610, margin ={b:0, t:40, l:320, r:30};
+    var width = 1500, height = 610, margin ={b:0, t:40, l:320, r:0};
 
     var svg = d3.select("#content")
-        .append("svg").attr('class','col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2').attr('height',700)
+        .append("svg").attr('class','col-sm-12 col-md-12').attr('height',700)
         .append("g").attr("transform","translate("+ margin.l+","+margin.t+")");
 
     var data = [ 

@@ -1,5 +1,5 @@
 from app import app, db
-import os
+import os, sys
 from flask import render_template, redirect, flash, request, session, json, url_for, flash
 from werkzeug import secure_filename
 from .models import User, Customer, Interest, Food_style, PotentialCustomer
@@ -60,19 +60,6 @@ def overview():
 
 
 
-@app.route('/potential-customer-list')
-def potentialcustomer():
-	if not checkDataExist():
-		return redirect(url_for('analysis'))
-	pcustomers = PotentialCustomer.query.all()
-	return render_template('potential-customer-list.html', pcustomers=pcustomers)
-
-@app.route('/potential-customer-list/<name>')
-def showcustomer(name):
-	return redirect(url_for('customerprofile', name=name))
-
-
-
 
 @app.route('/analysis')
 def analysis():
@@ -111,18 +98,32 @@ def allowed_file(filename):
 	return '.' in filename and filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
 
 
-
-@app.route('/customerprofile')
-def customersprofile():
+@app.route('/potential-customer-list')
+def potentialcustomer():
 	if not checkDataExist():
 		return redirect(url_for('analysis'))
-	customers = Customer.query.all()
-	return render_template('/customer-profile.html', customers=customers)
+	pc_list_name = os.path.join(app.config['UPLOAD_FOLDER'], 'target_selection.txt')
+	pcustomers = []
+	with open(pc_list_name, 'rb') as file:
+		customers = file.readlines()
+		for pc in customers:
+			customer = pc.split(',')
+			pcustomers.append(customer)
 
-@app.route('/customerprofile/<name>')
-def customerprofile(name):
-	customer = Customer.query.filter(Customer.name == name).all()
-	return render_template('/customer-profile.html', customers=customer)
+	return render_template('/potential-customer-list.html', pcustomers=pcustomers)
+
+
+@app.route('/recommend')
+def recommend():
+	if not checkDataExist():
+		return redirect(url_for('analysis'))
+	pcustomers = PotentialCustomer.query.all()
+	return render_template('recommend.html', pcustomers=pcustomers)
+
+@app.route('/recommend/<name>')
+def showcustomer(name):
+	return redirect(url_for('customerprofile', name=name))
+
 
 
 
@@ -135,18 +136,21 @@ def restaurantstyle():
 
 @app.route('/musicstyle')
 def musicstyle():
-	data = [
-        {"text": "Jazz", "count": "236"},
-        {"text": "Hip-Hop", "count": "382"},
-        {"text": "Rhythm & Blues", "count": "170"},
-        {"text": "Swing", "count": "123"},
-        {"text": "Blue", "count": "12"},
-        {"text": "Pop", "count": "170"},
-        {"text": "Soul", "count": "370"},
-        {"text": "Funk", "count": "10"},
-        {"text": "County", "count": "170"},
-      ]
-	return render_template('/musicstyle.html', input=json.dumps(data))
+	music_data = open('./data/musicdata.json').read() # json object
+	return render_template('/musicstyle.html', input=music_data)
+
+
+@app.route('/customerprofile')
+def customersprofile():
+	if not checkDataExist():
+		return redirect(url_for('analysis'))
+	customers = Customer.query.all()
+	return render_template('/customer-profile.html', customers=customers)
+
+@app.route('/customerprofile/<name>')
+def customerprofile(name):
+	customer = Customer.query.filter(Customer.name == name).all()
+	return render_template('/customer-profile.html', customers=customer)
 
 
 
